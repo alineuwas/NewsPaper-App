@@ -1,0 +1,203 @@
+Index: api/models.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>from django.db import models\r\nfrom django.contrib.auth.models import User\r\n\r\n# Create your models here.\r\n\r\nclass Author(models.Model):\r\n    user = models.OneToOneField(User, on_delete=models.CASCADE)\r\n    bio = models.TextField(max_length=500, blank=True)\r\n    def __str__(self):\r\n        return self.user.username\r\n    \r\nclass Article(models.Model):\r\n    title = models.CharField(max_length=100)\r\n    content = models.TextField()\r\n    author = models.ForeignKey(Author, on_delete=models.CASCADE)\r\n    created_on = models.DateTimeField(auto_now_add=True)\r\n    def __str__(self):\r\n        return self.title\r\n    \r\nclass Comment(models.Model):\r\n    article = models.ForeignKey(Article, on_delete=models.CASCADE)\r\n    user = models.ForeignKey(User, on_delete=models.CASCADE)\r\n    content = models.TextField()\r\n    created_on = models.DateTimeField(auto_now_add=True)\r\n    def __str__(self):\r\n        return self.content
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/api/models.py b/api/models.py
+--- a/api/models.py	(revision fb7c33f8b4ad2b2e326f6312d0e8ab03dce0a41c)
++++ b/api/models.py	(date 1731082452650)
+@@ -6,6 +6,10 @@
+ class Author(models.Model):
+     user = models.OneToOneField(User, on_delete=models.CASCADE)
+     bio = models.TextField(max_length=500, blank=True)
++    class Meta:
++        verbose_name = 'User'
++        verbose_name_plural = 'Users'
++
+     def __str__(self):
+         return self.user.username
+     
+@@ -23,4 +27,5 @@
+     content = models.TextField()
+     created_on = models.DateTimeField(auto_now_add=True)
+     def __str__(self):
+-        return self.content
+\ No newline at end of file
++        return self.content
++
+Index: .idea/dataSources.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/dataSources.xml b/.idea/dataSources.xml
+new file mode 100644
+--- /dev/null	(date 1731083694680)
++++ b/.idea/dataSources.xml	(date 1731083694680)
+@@ -0,0 +1,36 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
++    <data-source source="LOCAL" name="db" uuid="fb599452-1535-44ac-bdb3-dbb2157af37e">
++      <driver-ref>sqlite.xerial</driver-ref>
++      <synchronize>true</synchronize>
++      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
++      <jdbc-url>jdbc:sqlite:C:\Users\user\Desktop\property_management\db.sqlite3</jdbc-url>
++      <working-dir>$ProjectFileDir$</working-dir>
++    </data-source>
++    <data-source source="LOCAL" name="db [2]" uuid="bcc99978-654a-4486-b4c1-03e11487d03d">
++      <driver-ref>sqlite.xerial</driver-ref>
++      <synchronize>true</synchronize>
++      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
++      <jdbc-url>jdbc:sqlite:C:\Users\user\Desktop\INTERACTIVE WEB\django-apis-newspaperapp\db.sqlite3</jdbc-url>
++      <working-dir>$ProjectFileDir$</working-dir>
++      <libraries>
++        <library>
++          <url>file://$APPLICATION_CONFIG_DIR$/jdbc-drivers/Xerial SQLiteJDBC/3.45.1/org/xerial/sqlite-jdbc/3.45.1.0/sqlite-jdbc-3.45.1.0.jar</url>
++        </library>
++        <library>
++          <url>file://$APPLICATION_CONFIG_DIR$/jdbc-drivers/Xerial SQLiteJDBC/3.45.1/org/slf4j/slf4j-api/1.7.36/slf4j-api-1.7.36.jar</url>
++        </library>
++      </libraries>
++    </data-source>
++    <data-source source="LOCAL" name="Django default" uuid="f5da5888-2701-427a-8235-970f380a42b1">
++      <driver-ref>sqlite.xerial</driver-ref>
++      <synchronize>true</synchronize>
++      <imported>true</imported>
++      <remarks>$PROJECT_DIR$/newspaperApp/settings.py</remarks>
++      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
++      <jdbc-url>jdbc:sqlite:C:\Users\user\Desktop\INTERACTIVE WEB\django-apis-newspaperapp\db.sqlite3</jdbc-url>
++      <working-dir>$ProjectFileDir$</working-dir>
++    </data-source>
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/django-apis-newspaperapp.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/django-apis-newspaperapp.iml b/.idea/django-apis-newspaperapp.iml
+new file mode 100644
+--- /dev/null	(date 1731068947049)
++++ b/.idea/django-apis-newspaperapp.iml	(date 1731068947049)
+@@ -0,0 +1,27 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<module type="PYTHON_MODULE" version="4">
++  <component name="FacetManager">
++    <facet type="django" name="Django">
++      <configuration>
++        <option name="rootFolder" value="$MODULE_DIR$" />
++        <option name="settingsModule" value="newspaperApp/settings.py" />
++        <option name="manageScript" value="$MODULE_DIR$/manage.py" />
++        <option name="environment" value="&lt;map/&gt;" />
++        <option name="doNotUseTestRunner" value="false" />
++        <option name="trackFilePattern" value="migrations" />
++      </configuration>
++    </facet>
++  </component>
++  <component name="NewModuleRootManager">
++    <content url="file://$MODULE_DIR$" />
++    <orderEntry type="jdk" jdkName="Python 3.12 (PropterTeamManagment)" jdkType="Python SDK" />
++    <orderEntry type="sourceFolder" forTests="false" />
++  </component>
++  <component name="PyDocumentationSettings">
++    <option name="format" value="PLAIN" />
++    <option name="myDocStringFormat" value="Plain" />
++  </component>
++  <component name="TemplatesService">
++    <option name="TEMPLATE_CONFIGURATION" value="Django" />
++  </component>
++</module>
+\ No newline at end of file
+Index: .idea/inspectionProfiles/profiles_settings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/inspectionProfiles/profiles_settings.xml b/.idea/inspectionProfiles/profiles_settings.xml
+new file mode 100644
+--- /dev/null	(date 1731068832689)
++++ b/.idea/inspectionProfiles/profiles_settings.xml	(date 1731068832689)
+@@ -0,0 +1,6 @@
++<component name="InspectionProjectProfileManager">
++  <settings>
++    <option name="USE_PROJECT_PROFILE" value="false" />
++    <version value="1.0" />
++  </settings>
++</component>
+\ No newline at end of file
+Index: .idea/modules.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/modules.xml b/.idea/modules.xml
+new file mode 100644
+--- /dev/null	(date 1731068832650)
++++ b/.idea/modules.xml	(date 1731068832650)
+@@ -0,0 +1,8 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="ProjectModuleManager">
++    <modules>
++      <module fileurl="file://$PROJECT_DIR$/.idea/django-apis-newspaperapp.iml" filepath="$PROJECT_DIR$/.idea/django-apis-newspaperapp.iml" />
++    </modules>
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+new file mode 100644
+--- /dev/null	(date 1731068947065)
++++ b/.idea/misc.xml	(date 1731068947065)
+@@ -0,0 +1,7 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="Black">
++    <option name="sdkName" value="Python 3.12 (PropterTeamManagment)" />
++  </component>
++  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.12 (PropterTeamManagment)" project-jdk-type="Python SDK" />
++</project>
+\ No newline at end of file
+Index: .idea/.gitignore
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/.gitignore b/.idea/.gitignore
+new file mode 100644
+--- /dev/null	(date 1731068836984)
++++ b/.idea/.gitignore	(date 1731068836984)
+@@ -0,0 +1,8 @@
++# Default ignored files
++/shelf/
++/workspace.xml
++# Editor-based HTTP Client requests
++/httpRequests/
++# Datasource local storage ignored files
++/dataSources/
++/dataSources.local.xml
+Index: .idea/vcs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/vcs.xml b/.idea/vcs.xml
+new file mode 100644
+--- /dev/null	(date 1731068947065)
++++ b/.idea/vcs.xml	(date 1731068947065)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="VcsDirectoryMappings">
++    <mapping directory="" vcs="Git" />
++  </component>
++</project>
+\ No newline at end of file
